@@ -34,6 +34,18 @@
       {
         "command": "copus.openDashboard",
         "title": "Copus: Open Dashboard"
+      },
+      {
+        "command": "copus.configure",
+        "title": "Copus: Configure MCP Server & Skills"
+      },
+      {
+        "command": "copus.setApiKey",
+        "title": "Copus: Set MiniMax API Key"
+      },
+      {
+        "command": "copus.installSkills",
+        "title": "Copus: Install/Update Skills"
       }
     ],
     "configuration": {
@@ -75,6 +87,11 @@
           "minimum": 50,
           "maximum": 99,
           "description": "Percentage of prompts used before showing warning indicator."
+        },
+        "copus.autoConfigureOnActivation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically configure MCP server and install skills on activation."
         }
       }
     }

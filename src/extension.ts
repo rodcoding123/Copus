@@ -3,6 +3,12 @@ import { StatusBar } from "./status-bar.js";
 import { FileWatcher } from "./file-watcher.js";
 import { CopusDashboardPanel } from "./webview-panel.js";
 import { parseUsageFile } from "./usage-parser.js";
+import {
+  ensureConfiguration,
+  runConfigure,
+  runSetApiKey,
+  runInstallSkills,
+} from "./auto-config.js";
 
 let statusBar: StatusBar | undefined;
 let fileWatcher: FileWatcher | undefined;
@@ -11,6 +17,11 @@ let dashboardPanel: CopusDashboardPanel | undefined;
 export function activate(context: vscode.ExtensionContext): void {
   const outputChannel = vscode.window.createOutputChannel("Copus");
   outputChannel.appendLine("Copus activated");
+
+  // Auto-configure MCP server, API key, and skills
+  ensureConfiguration(context, outputChannel).catch((err) => {
+    outputChannel.appendLine(`[Copus] Auto-config error: ${err}`);
+  });
 
   // Status bar
   statusBar = new StatusBar();
@@ -36,12 +47,36 @@ export function activate(context: vscode.ExtensionContext): void {
     },
   );
 
-  context.subscriptions.push(outputChannel, statusBar, fileWatcher, openDashboard);
+  // Command: re-run auto-configuration
+  const configure = vscode.commands.registerCommand(
+    "copus.configure",
+    () => runConfigure(context, outputChannel),
+  );
+
+  // Command: set MiniMax API key
+  const setApiKey = vscode.commands.registerCommand(
+    "copus.setApiKey",
+    () => runSetApiKey(outputChannel),
+  );
+
+  // Command: reinstall/update skill files
+  const installSkills = vscode.commands.registerCommand(
+    "copus.installSkills",
+    () => runInstallSkills(context, outputChannel),
+  );
+
+  context.subscriptions.push(
+    outputChannel,
+    statusBar,
+    fileWatcher,
+    openDashboard,
+    configure,
+    setApiKey,
+    installSkills,
+  );
 }
 
 export function deactivate(): void {
-  // statusBar and fileWatcher are in context.subscriptions — VS Code disposes them.
-  // dashboardPanel is created lazily and not in subscriptions, so dispose it here.
   dashboardPanel?.dispose();
   statusBar = undefined;
   fileWatcher = undefined;
