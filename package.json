@@ -1,0 +1,84 @@
+{
+  "name": "swarm-monitor",
+  "displayName": "Swarm Monitor",
+  "description": "Real-time MCP swarm usage analytics — prompts remaining, cost savings vs Opus, usage patterns, and performance metrics.",
+  "version": "0.1.0",
+  "publisher": "rodrigo-specter",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodcoding123/Cheapopus.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "swarmMonitor.openDashboard",
+        "title": "Swarm Monitor: Open Dashboard"
+      }
+    ],
+    "configuration": {
+      "title": "Swarm Monitor",
+      "properties": {
+        "swarmMonitor.usageFilePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to llm-swarm-usage.json. Leave empty to use default (~/.claude/llm-swarm-usage.json)."
+        },
+        "swarmMonitor.refreshInterval": {
+          "type": "number",
+          "default": 30,
+          "minimum": 5,
+          "maximum": 300,
+          "description": "Polling interval in seconds (fallback when file watcher misses changes)."
+        },
+        "swarmMonitor.opusPricing": {
+          "type": "object",
+          "default": {
+            "inputPerMillion": 15,
+            "outputPerMillion": 75
+          },
+          "properties": {
+            "inputPerMillion": {
+              "type": "number",
+              "description": "Opus input price per million tokens (USD)"
+            },
+            "outputPerMillion": {
+              "type": "number",
+              "description": "Opus output price per million tokens (USD)"
+            }
+          },
+          "description": "Opus pricing for cost comparison calculations."
+        },
+        "swarmMonitor.warningThreshold": {
+          "type": "number",
+          "default": 80,
+          "minimum": 50,
+          "maximum": 99,
+          "description": "Percentage of prompts used before showing warning indicator."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@types/vscode": "^1.85.0",
+    "chart.js": "^4.5.1",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.3.0"
+  }
+}

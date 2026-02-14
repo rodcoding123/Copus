@@ -1,0 +1,261 @@
+/* Swarm Monitor Dashboard — VS Code theme-aware */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-foreground);
+  background: var(--vscode-editor-background);
+  line-height: 1.5;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ── Header ────────────────────────────────────── */
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  background: var(--vscode-sideBar-background);
+}
+
+.header-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-stat .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.header-stat .value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+}
+
+.header-stat .value.savings {
+  color: var(--vscode-charts-green, #4ec9b0);
+}
+
+.header-stat .value.warning {
+  color: var(--vscode-editorWarning-foreground, #cca700);
+}
+
+.header-stat .value.error {
+  color: var(--vscode-editorError-foreground, #f14c4c);
+}
+
+/* ── Tab Navigation ────────────────────────────── */
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  background: var(--vscode-sideBar-background);
+  padding: 0 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: var(--vscode-descriptionForeground);
+  font-size: 13px;
+  font-family: var(--vscode-font-family);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover {
+  color: var(--vscode-foreground);
+}
+
+.tab.active {
+  color: var(--vscode-foreground);
+  border-bottom-color: var(--vscode-focusBorder);
+}
+
+/* ── Tab Content ───────────────────────────────── */
+
+.tab-content {
+  display: none;
+  padding: 20px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ── Cards ─────────────────────────────────────── */
+
+.card {
+  background: var(--vscode-sideBar-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+  margin-bottom: 12px;
+}
+
+/* ── Grid layouts ──────────────────────────────── */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Hero metric ───────────────────────────────── */
+
+.hero {
+  text-align: center;
+  padding: 24px 16px;
+}
+
+.hero .big-number {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--vscode-charts-green, #4ec9b0);
+}
+
+.hero .big-label {
+  font-size: 13px;
+  color: var(--vscode-descriptionForeground);
+  margin-top: 4px;
+}
+
+/* ── Stats row ─────────────────────────────────── */
+
+.stats-row {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item .stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+}
+
+.stat-item .stat-label {
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+}
+
+/* ── Chart containers ──────────────────────────── */
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 280px;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Empty state ───────────────────────────────── */
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.empty-state .empty-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-state .empty-text {
+  font-size: 14px;
+}
+
+/* ── Progress bar ──────────────────────────────── */
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--vscode-input-background);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--vscode-progressBar-background, #0e70c0);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* ── Comparison card ───────────────────────────── */
+
+.comparison {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 16px;
+}
+
+.comparison-item {
+  text-align: center;
+}
+
+.comparison-item .comp-value {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.comparison-item .comp-label {
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.comparison-vs {
+  font-size: 14px;
+  color: var(--vscode-descriptionForeground);
+  font-weight: 600;
+}
